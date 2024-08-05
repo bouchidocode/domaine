@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Domain Value Estimator</title>
+</head>
+<body>
+    <h1>Domain Value Estimator</h1>
+    <form id="domainForm">
+        <label for="domainName">Domain Name:</label><br>
+        <input type="text" id="domainName" name="domainName"><br>
+        <input type="submit" value="Estimate Value">
+    </form>
+    <h2>Estimated Value: <span id="estimatedValue"></span></h2>
+
+    <script>
+        document.getElementById('domainForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const domainName = document.getElementById('domainName').value;
+            const response = await fetch('/estimate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ domainName })
+            });
+            const result = await response.json();
+            document.getElementById('estimatedValue').innerText = result.estimated_value;
+        });
+    </script>
+</body>
+</html>
